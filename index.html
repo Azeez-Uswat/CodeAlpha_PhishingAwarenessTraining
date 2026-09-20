@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PhishShield | Phishing Awareness Training</title>
+  <style>
+    :root {
+      --bg: #0f172a;
+      --card-bg: #1e293b;
+      --accent: #38bdf8;
+      --accent-hover: #0284c7;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --danger: #ef4444;
+      --success: #22c55e;
+      --warning: #f59e0b;
+      --border: #334155;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, sans-serif; }
+    body { background-color: var(--bg); color: var(--text); line-height: 1.6; padding-bottom: 60px; }
+    header { background: #0b1120; border-bottom: 1px solid var(--border); padding: 2.5rem 1rem; text-align: center; }
+    header h1 { font-size: 2.2rem; color: var(--accent); margin-bottom: 0.5rem; }
+    header p { color: var(--text-muted); max-width: 650px; margin: 0 auto; }
+    .container { max-width: 1000px; margin: 2rem auto; padding: 0 1rem; display: grid; gap: 2.5rem; }
+    .card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; padding: 1.8rem; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.3); }
+    h2 { color: var(--accent); margin-bottom: 1rem; border-bottom: 1px solid var(--border); padding-bottom: 0.5rem; font-size: 1.4rem; display: flex; align-items: center; gap: 0.5rem; }
+    .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.2rem; margin-top: 1rem; }
+    .badge { display: inline-block; padding: 0.2rem 0.6rem; border-radius: 4px; font-size: 0.75rem; font-weight: bold; text-transform: uppercase; }
+    .badge-danger { background: rgba(239, 68, 68, 0.2); color: var(--danger); border: 1px solid var(--danger); }
+    .badge-warning { background: rgba(245, 158, 11, 0.2); color: var(--warning); border: 1px solid var(--warning); }
+    .email-mockup { background: #090d16; border: 1px solid var(--border); border-radius: 8px; padding: 1rem; font-family: monospace; font-size: 0.9rem; margin-top: 1rem; }
+    .email-header { border-bottom: 1px dashed var(--border); padding-bottom: 0.5rem; margin-bottom: 0.8rem; color: var(--text-muted); }
+    .red-flag { background: rgba(239, 68, 68, 0.25); color: #fca5a5; padding: 0 4px; border-radius: 3px; cursor: pointer; text-decoration: underline dotted; }
+    .checklist li { list-style: none; margin-bottom: 0.6rem; display: flex; align-items: flex-start; gap: 0.5rem; }
+    .checklist li::before { content: "✔"; color: var(--success); font-weight: bold; }
+    .quiz-question { margin-bottom: 1.5rem; background: #131d2e; padding: 1rem; border-radius: 8px; }
+    .quiz-options { display: grid; gap: 0.5rem; margin-top: 0.8rem; }
+    .option-btn { background: var(--card-bg); border: 1px solid var(--border); color: var(--text); padding: 0.7rem 1rem; border-radius: 6px; text-align: left; cursor: pointer; transition: 0.2s; }
+    .option-btn:hover { border-color: var(--accent); background: #26354a; }
+    .option-btn.correct { background: rgba(34, 197, 94, 0.2); border-color: var(--success); color: #86efac; }
+    .option-btn.wrong { background: rgba(239, 68, 68, 0.2); border-color: var(--danger); color: #fca5a5; }
+    .feedback { margin-top: 0.6rem; font-size: 0.85rem; display: none; }
+    #score-banner { margin-top: 1rem; padding: 1rem; border-radius: 8px; text-align: center; font-weight: bold; display: none; background: #0b1120; border: 1px solid var(--accent); }
+    footer { text-align: center; color: var(--text-muted); font-size: 0.85rem; margin-top: 2rem; }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>PhishShield Awareness Module</h1>
+    <p>CodeAlpha Cybersecurity Internship | Educational Defense Guide Against Social Engineering</p>
+  </header>
+
+  <div class="container">
+    
+    <!-- SECTION 1: ANATOMY OF A PHISH -->
+    <section class="card">
+      <h2>1. Recognizing Phishing Emails & Fake Websites</h2>
+      <p>Attackers craft psychological lures mimicking reputable entities. Hover or inspect the red-flag markers below to see what makes this lure suspicious:</p>
+      
+      <div class="email-mockup">
+        <div class="email-header">
+          <strong>From:</strong> IT Support &lt;<span class="red-flag" title="Lookalike domain: 'micros0ft' uses a zero instead of an 'o'">support@micros0ft-security-update.com</span>&gt;<br/>
+          <strong>To:</strong> employee@company.com<br/>
+          <strong>Subject:</strong> <span class="red-flag" title="Manufactured urgency to bypass critical thinking">URGENT: Password Expiry Notice (Action Required in 1 Hour)</span>
+        </div>
+        <p>Dear Valued User,</p>
+        <p>Your access credentials expire today. To retain access to internal servers and emails, verify your account immediately:</p>
+        <p style="margin: 1rem 0;">
+          👉 <span class="red-flag" title="Deceptive URL target: actual domain is login-portal.biz, not Microsoft">http://login-portal.biz/auth?session=92842</span>
+        </p>
+        <p>Failure to comply will trigger automated suspension of your active account.</p>
+      </div>
+
+      <div class="grid-2">
+        <div>
+          <h3 style="color: var(--warning); margin-bottom: 0.5rem;">Email Red Flags</h3>
+          <ul class="checklist">
+            <li>Mismatched sender domain vs. display name</li>
+            <li>Manufactured urgency or threatening deadlines</li>
+            <li>Generic greetings ("Dear Customer/Employee")</li>
+            <li>Unsolicited attachments (.zip, .iso, .xlsm, .exe)</li>
+          </ul>
+        </div>
+        <div>
+          <h3 style="color: var(--warning); margin-bottom: 0.5rem;">Website Red Flags</h3>
+          <ul class="checklist">
+            <li>Typosquatting domains (e.g., <code>paypa1.com</code>)</li>
+            <li>Misleading subdomains (e.g., <code>paypal.secure-login.com</code>)</li>
+            <li>Lack of valid organizational SSL/TLS cert</li>
+            <li>Missing interactive links and broken footer navigation</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 2: SOCIAL ENGINEERING TACTICS -->
+    <section class="card">
+      <h2>2. Social Engineering Psychological Triggers</h2>
+      <p>Social engineering exploits human cognitive heuristics rather than software vulnerabilities:</p>
+      <div class="grid-2">
+        <div style="background: #131d2e; padding: 1rem; border-radius: 8px;">
+          <span class="badge badge-danger">Authority</span>
+          <p style="margin-top: 0.5rem;">Impersonating C-level executives, law enforcement, or IT administrators to suppress questioning.</p>
+        </div>
+        <div style="background: #131d2e; padding: 1rem; border-radius: 8px;">
+          <span class="badge badge-warning">Urgency & Fear</span>
+          <p style="margin-top: 0.5rem;">Imposing artificial deadlines ("account suspended in 15 mins") to trigger panic and hasty clicks.</p>
+        </div>
+        <div style="background: #131d2e; padding: 1rem; border-radius: 8px;">
+          <span class="badge badge-danger">Curiosity & Greed</span>
+          <p style="margin-top: 0.5rem;">Luring targets with bonus distributions, package tracking links, or salacious workplace leaks.</p>
+        </div>
+        <div style="background: #131d2e; padding: 1rem; border-radius: 8px;">
+          <span class="badge badge-warning">Social Proof</span>
+          <p style="margin-top: 0.5rem;">Claiming "all team members have already completed this protocol" to force conformity.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 3: REAL-WORLD INCIDENTS -->
+    <section class="card">
+      <h2>3. Real-World Case Studies</h2>
+      <div class="grid-2">
+        <div style="background: #131d2e; padding: 1rem; border-radius: 8px;">
+          <h3 style="color: #fff; font-size: 1.1rem;">FACC AG BEC Incident ($47M)</h3>
+          <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 0.5rem;">
+            An Austrian aerospace parts manufacturer suffered a Business Email Compromise (BEC) when an attacker impersonated the CEO, directing accounting staff to wire funds for a secret expansion project.
+          </p>
+        </div>
+        <div style="background: #131d2e; padding: 1rem; border-radius: 8px;">
+          <h3 style="color: #fff; font-size: 1.1rem;">Ubiquiti Networks Wire Fraud ($46.7M)</h3>
+          <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 0.5rem;">
+            Attackers targeted finance employees through executive impersonation, tricking them into making repeated multimillion-dollar transfers to overseas third-party accounts.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 4: BEST PRACTICES -->
+    <section class="card">
+      <h2>4. Defense-in-Depth Best Practices</h2>
+      <ul class="checklist">
+        <li><strong>Inspect Full Headers:</strong> Check the return-path, SPF, DKIM, and DMARC alignment on unexpected communications.</li>
+        <li><strong>Out-of-Band Verification:</strong> Verify wire transfer requests or credential changes via known phone numbers or walk-ups, never by replying to the thread.</li>
+        <li><strong>Enforce Strong MFA:</strong> Adopt FIDO2/WebAuthn hardware security keys to resist reverse-proxy phishing frameworks (like Evilginx).</li>
+        <li><strong>Hover Before Clicking:</strong> Always inspect the destination URL root domain before navigating.</li>
+      </ul>
+    </section>
+
+    <!-- SECTION 5: INTERACTIVE QUIZ -->
+    <section class="card">
+      <h2>5. Knowledge Check (Interactive Quiz)</h2>
+      <div id="quiz-container">
+        <!-- Question 1 -->
+        <div class="quiz-question" data-correct="1">
+          <p><strong>Question 1:</strong> You receive an email from "Google Security" using the address <code>no-reply@google-security-notice.com</code> stating your password was compromised. What is the most reliable first action?</p>
+          <div class="quiz-options">
+            <button class="option-btn" onclick="checkAnswer(this, 0)">Click the provided verification link to check activity</button>
+            <button class="option-btn" onclick="checkAnswer(this, 1)">Navigate manually to myaccount.google.com in a new browser tab</button>
+            <button class="option-btn" onclick="checkAnswer(this, 2)">Reply with your current password to verify identity</button>
+          </div>
+          <p class="feedback"></p>
+        </div>
+
+        <!-- Question 2 -->
+        <div class="quiz-question" data-correct="2">
+          <p><strong>Question 2:</strong> A website displays a green padlock (HTTPS) in the browser address bar. What does this guarantee?</p>
+          <div class="quiz-options">
+            <button class="option-btn" onclick="checkAnswer(this, 0)">The website and its owners are authenticated and harmless</button>
+            <button class="option-btn" onclick="checkAnswer(this, 1)">The site is immune to credential theft</button>
+            <button class="option-btn" onclick="checkAnswer(this, 2)">The connection is encrypted, but the site itself may still be malicious</button>
+          </div>
+          <p class="feedback"></p>
+        </div>
+
+        <!-- Question 3 -->
+        <div class="quiz-question" data-correct="0">
+          <p><strong>Question 3:</strong> Why are modern attackers using reverse-proxy phishing kits (e.g., Evilginx)?</p>
+          <div class="quiz-options">
+            <button class="option-btn" onclick="checkAnswer(this, 0)">To intercept session tokens and bypass basic 2FA codes in real time</button>
+            <button class="option-btn" onclick="checkAnswer(this, 1)">To directly encrypt target drives with ransomware</button>
+            <button class="option-btn" onclick="checkAnswer(this, 2)">To alter victim hardware configurations remotely</button>
+          </div>
+          <p class="feedback"></p>
+        </div>
+      </div>
+      <div id="score-banner"></div>
+    </section>
+
+  </div>
+
+  <footer>
+    <p>&copy; CodeAlpha Cybersecurity Internship | Project Submission</p>
+  </footer>
+
+  <script>
+    let answeredCount = 0;
+    let score = 0;
+    const totalQuestions = document.querySelectorAll('.quiz-question').length;
+
+    function checkAnswer(btn, chosenIndex) {
+      const questionEl = btn.closest('.quiz-question');
+      if (questionEl.dataset.answered === "true") return;
+
+      questionEl.dataset.answered = "true";
+      answeredCount++;
+
+      const correctIndex = parseInt(questionEl.dataset.correct);
+      const feedbackEl = questionEl.querySelector('.feedback');
+      const buttons = questionEl.querySelectorAll('.option-btn');
+
+      if (chosenIndex === correctIndex) {
+        btn.classList.add('correct');
+        feedbackEl.style.color = 'var(--success)';
+        feedbackEl.innerText = "✔ Correct! Accurate identification of the threat vector.";
+        score++;
+      } else {
+        btn.classList.add('wrong');
+        buttons[correctIndex].classList.add('correct');
+        feedbackEl.style.color = 'var(--danger)';
+        feedbackEl.innerText = "✖ Incorrect. Review the root domain and out-of-band verification principles.";
+      }
+      feedbackEl.style.display = "block";
+
+      if (answeredCount === totalQuestions) {
+        const banner = document.getElementById('score-banner');
+        banner.style.display = 'block';
+        banner.innerText = `Quiz Complete! Your Score: ${score} / ${totalQuestions}`;
+      }
+    }
+  </script>
+</body>
+</html>
